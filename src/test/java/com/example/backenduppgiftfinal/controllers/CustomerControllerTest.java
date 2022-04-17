@@ -77,9 +77,9 @@ class CustomerControllerTest {
 
     @Test
     void getCustomerById() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/customers/getById?id=1")
+        mvc.perform(MockMvcRequestBuilders.get("/customers/:id?id=1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"name\":\"Niklas\",\"id\":1}"));
+                .andExpect(content().json("{\"id\":1,\"name\":\"Niklas\"}"));
     }
 }

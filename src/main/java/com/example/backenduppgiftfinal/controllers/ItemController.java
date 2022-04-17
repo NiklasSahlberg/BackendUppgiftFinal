@@ -41,16 +41,8 @@ public class ItemController {
         return itemRepository.findAll();
     }
 
-    @RequestMapping ("/itemById")
-    public Items itemById(@RequestParam long id){
-
-
-
-
-        return itemRepository.findById(id).get();
-
-
-    }
+    @RequestMapping ("/items/:id")
+    public Items itemById(@RequestParam long id) { return itemRepository.findById(id).get(); }
 
    /* @RequestMapping("/buy")
     public String buyItem(@RequestParam long customerId, @RequestParam long itemId)

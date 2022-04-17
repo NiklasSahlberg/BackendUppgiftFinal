@@ -23,14 +23,13 @@ public class CustomerController {
         return name + " is saved";
     }
 
+
     @RequestMapping("/all")
     public Iterable<Customers> getAllCustomers(){
         return customerRepository.findAll();
     }
 
 
-    @RequestMapping("/getById")
-    public Customers getCustomerById(@RequestParam long id){
-        return customerRepository.findById(id).get();
-    }
+    @RequestMapping("/:id")
+    public Customers getCustomerById(@RequestParam long id) { return customerRepository.findById(id).get(); }
 }
