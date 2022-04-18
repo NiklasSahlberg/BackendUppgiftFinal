@@ -36,9 +36,6 @@ class CustomerControllerTest {
     @BeforeEach
     public void init()
     {
-
-
-
         Customers c1 = new Customers();
         Customers c2 = new Customers();
         Customers c3 = new Customers();
@@ -50,29 +47,23 @@ class CustomerControllerTest {
         c3.setName("Apex");
         c3.setId(3L);
 
-
         when(mockRepository.findById(1L)).thenReturn(Optional.of(c1));
         when(mockRepository.findAll()).thenReturn(Arrays.asList(c1, c2, c3));
-
-
     }
-
-
-
-
 
     @Test
     void addNewUser() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/customers/add?name=superman").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().string(equalTo("superman is saved")));
-
-
+        mvc.perform(MockMvcRequestBuilders.get("/customers/add?name=superman").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content().string(equalTo("superman is saved")));
     }
 
     @Test
     void getAllCustomers() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/customers/all").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().json("[{\"id\":1,\"name\":\"Niklas\"}," +
-                "{\"id\":2,\"name\":\"Panos\"},"+
-                "{\"id\":3,\"name\":\"Apex\"}]"));
+        mvc.perform(MockMvcRequestBuilders.get("/customers/all").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content()
+                        .json("[{\"id\":1,\"name\":\"Niklas\"}," +
+                                "{\"id\":2,\"name\":\"Panos\"},"+
+                                "{\"id\":3,\"name\":\"Apex\"}]"));
     }
 
     @Test

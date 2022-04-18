@@ -56,14 +56,17 @@ class ItemControllerTest {
 
     @Test
     void addItem() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/items/add?name=ost").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().string(equalTo("Varan ost sparad")));
+        mvc.perform(MockMvcRequestBuilders.get("/items/add?name=ost").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content().string(equalTo("Varan ost sparad")));
     }
 
     @Test
     void allItems() throws Exception{
-        mvc.perform(MockMvcRequestBuilders.get("/items/all").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().json("[{\"id\":1,\"name\":\"kyl\"}," +
-                "{\"id\":2,\"name\":\"potatis\"},"+
-                "{\"id\":3,\"name\":\"tvättmedel\"}]"));
+        mvc.perform(MockMvcRequestBuilders.get("/items/all").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content()
+                        .json("[{\"id\":1,\"name\":\"kyl\"}," +
+                                "{\"id\":2,\"name\":\"potatis\"},"+
+                                "{\"id\":3,\"name\":\"tvättmedel\"}]"));
     }
 
     @Test
