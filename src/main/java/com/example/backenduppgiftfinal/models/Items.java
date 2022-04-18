@@ -11,7 +11,9 @@ public class Items {
     @Id
     @GeneratedValue
     Long id;
+
     String name;
+    //String produktnummer;
 
 
 

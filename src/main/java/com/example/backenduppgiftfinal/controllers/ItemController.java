@@ -1,15 +1,14 @@
 package com.example.backenduppgiftfinal.controllers;
 
 
+import com.example.backenduppgiftfinal.models.BuyOrder;
+import com.example.backenduppgiftfinal.models.Customers;
 import com.example.backenduppgiftfinal.models.Items;
 import com.example.backenduppgiftfinal.repositories.CustomerRepository;
 import com.example.backenduppgiftfinal.repositories.ItemRepository;
 import com.example.backenduppgiftfinal.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -41,28 +40,57 @@ public class ItemController {
         return itemRepository.findAll();
     }
 
-    @RequestMapping ("/items/:id")
+    @RequestMapping ("/:id")
     public Items itemById(@RequestParam long id) { return itemRepository.findById(id).get(); }
 
-   /* @RequestMapping("/buy")
-    public String buyItem(@RequestParam long customerId, @RequestParam long itemId)
+  /*  @RequestMapping("/buy") public String buyItem(@RequestParam long customer, @RequestParam long item)
     {
         BuyOrder bo = new BuyOrder();
-        bo.setCustomerId(customerId);
-        Customers c = customerRepository.findById(customerId).get();
-        Items i = itemRepository.findById(itemId).get();
+        bo.setCustomerId(customer);
+        Customers c = customerRepository.findById(customer).get();
+        Items i = itemRepository.findById(item).get();
+
+        if (c != null) {
+            bo.setCustomers(c);
+        }
+       if (i != null) {
+            bo.setItems(i);
+        }
+
+
+         if (i != null) {
+            bo.setItems(i);
+        }
+
+        orderRepository.save(bo);
+        return "order sparad";
+    }
+
+   */
+
+    @PostMapping("/buy2") public String buyItems(@RequestBody BuyOrder bo)
+    {
+        bo.setCustomer(bo.getCustomer());
+        Customers c = customerRepository.findById(bo.getCustomer()).get();
+        Items i = itemRepository.findById(bo.getItem()).get();
 
         if (c != null) {
             bo.setCustomers(c);
         }
         if (i != null) {
-            bo.setItemsList((List<Items>) i);
+            bo.setItems(i);
         }
+
+
+        if (i != null) {
+            bo.setItems(i);
+        }
+
         orderRepository.save(bo);
         return "order sparad";
     }
 
 
-    */
+
 
 }

@@ -12,25 +12,31 @@ public class BuyOrder {
     @Id
     @GeneratedValue
     private Long id;
-    private String item;
-    private Long customerId;
-  /*  @Autowired
-    private String ordernummer;
+    private Long item;
+   // private Long orderNummer;
+    private Long customer;
 
-   */
 
-    @ManyToOne
+
+
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn
     Customers customers;
 
 
-   /* @OneToMany
+    @ManyToMany
+    @JoinTable
+    private List <Items> itemsList;
+
+    @ManyToOne
     @JoinColumn
     private Items items;
 
 
 
-    */
+
+
+
 
 
   /* @ManyToMany

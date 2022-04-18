@@ -17,7 +17,9 @@ public class Customers {
     Long id;
     String name;
 
+
+
     @JsonIgnore
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customers")
     private List<BuyOrder> orders;
 }
