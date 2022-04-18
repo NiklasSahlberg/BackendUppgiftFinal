@@ -13,7 +13,7 @@ public class BuyOrder {
     @GeneratedValue
     private Long id;
     private Long item;
-   // private Long orderNummer;
+    // private Long orderNummer;
     private Long customer;
 
 
@@ -31,17 +31,4 @@ public class BuyOrder {
     @ManyToOne
     @JoinColumn
     private Items items;
-
-
-
-
-
-
-
-
-  /* @ManyToMany
-    @JoinTable
-    private List<Items> itemsList;
-
-   */
 }
