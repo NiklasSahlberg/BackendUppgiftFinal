@@ -43,32 +43,8 @@ public class ItemController {
     @RequestMapping ("/:id")
     public Items itemById(@RequestParam long id) { return itemRepository.findById(id).get(); }
 
-  /*  @RequestMapping("/buy") public String buyItem(@RequestParam long customer, @RequestParam long item)
-    {
-        BuyOrder bo = new BuyOrder();
-        bo.setCustomerId(customer);
-        Customers c = customerRepository.findById(customer).get();
-        Items i = itemRepository.findById(item).get();
 
-        if (c != null) {
-            bo.setCustomers(c);
-        }
-       if (i != null) {
-            bo.setItems(i);
-        }
-
-
-         if (i != null) {
-            bo.setItems(i);
-        }
-
-        orderRepository.save(bo);
-        return "order sparad";
-    }
-
-   */
-
-    @PostMapping("/buy2") public String buyItems(@RequestBody BuyOrder bo)
+    @PostMapping("/buy") public String buyItems(@RequestBody BuyOrder bo)
     {
         bo.setCustomer(bo.getCustomer());
         Customers c = customerRepository.findById(bo.getCustomer()).get();

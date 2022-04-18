@@ -75,6 +75,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void buyItem() {
+    void buyItems() {
+
     }
 }

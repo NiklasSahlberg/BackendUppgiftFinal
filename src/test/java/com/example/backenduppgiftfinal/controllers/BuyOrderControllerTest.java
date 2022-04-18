@@ -61,6 +61,9 @@ class BuyOrderControllerTest {
         bo2.setItem(2L);
         bo3.setCustomer(3L);
         bo3.setItem(3L);
+        bo1.setId(1L);
+        bo2.setId(2L);
+        bo3.setId(3L);
 
 
 
@@ -88,5 +91,7 @@ class BuyOrderControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("{\"id\":1}"));
+
+
     }
 }
