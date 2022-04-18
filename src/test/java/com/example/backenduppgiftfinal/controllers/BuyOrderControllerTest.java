@@ -74,14 +74,16 @@ class BuyOrderControllerTest {
     }
     @Test
     void addNewOrder() {
+
     }
 
     @Test
     void allOrders() throws Exception {
 
-        mvc.perform(MockMvcRequestBuilders.get("/order/all").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json
+        mvc.perform(MockMvcRequestBuilders.get("/order/all").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json
                 ("[{\"customer\":1,\"item\": 1}," +
-    "{\"customer\":2,\"item\": 2}," +
+                        "{\"customer\":2,\"item\": 2}," +
                         "{\"customer\":3,\"item\": 3}]"));
   }
 
