@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order")
 public class BuyOrderController {
@@ -36,10 +38,14 @@ public class BuyOrderController {
         return orderRepository.findAll();
     }
 
-    @RequestMapping("/findById")
-    public BuyOrder orderById(long id)
+    @RequestMapping("/findById/:customerId")
+    public List<BuyOrder> orderById(long id)
     {
-        return orderRepository.findById(id).get();
+        return orderRepository.findByCustomer(id);
     }
+
+
+
+
 
 }

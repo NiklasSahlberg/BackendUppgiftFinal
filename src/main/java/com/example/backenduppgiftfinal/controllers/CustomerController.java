@@ -3,6 +3,7 @@ package com.example.backenduppgiftfinal.controllers;
 import com.example.backenduppgiftfinal.models.Customers;
 import com.example.backenduppgiftfinal.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class CustomerController {
     }
 
 
+
     @RequestMapping("/all")
     public Iterable<Customers> getAllCustomers(){
         return customerRepository.findAll();
@@ -31,5 +33,5 @@ public class CustomerController {
 
 
     @RequestMapping("/:id")
-    public Customers getCustomerById(@RequestParam long id) { return customerRepository.findById(id).get(); }
+    public Customers getCustomerById(@PathVariable long id) { return customerRepository.findById(id).get(); }
 }

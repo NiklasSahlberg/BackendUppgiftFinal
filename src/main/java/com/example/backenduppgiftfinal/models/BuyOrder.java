@@ -13,6 +13,7 @@ public class BuyOrder {
     @GeneratedValue
     private Long id;
     private Long item;
+    private Long customerId;
     // private Long orderNummer;
     private Long customer;
 

@@ -13,17 +13,7 @@ public class Items {
     Long id;
 
     String name;
-    //String produktnummer;
 
-
-
-   /* @ManyToMany
-    @JoinColumn
-    private List<BuyOrder> buyOrders;
-
-
-
-    */
 
 
 }

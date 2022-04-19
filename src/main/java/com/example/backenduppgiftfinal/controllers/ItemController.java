@@ -62,6 +62,7 @@ public class ItemController {
             bo.setItems(i);
         }
 
+        bo.setCustomerId(c.getId());
         orderRepository.save(bo);
         return "order sparad";
     }
