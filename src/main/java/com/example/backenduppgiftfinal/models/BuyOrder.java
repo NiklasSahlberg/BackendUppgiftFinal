@@ -19,10 +19,6 @@ public class BuyOrder {
     @JoinColumn
     Customers customers;
 
-    @ManyToMany
-    @JoinTable
-    private List <Items> itemsList;
-
     @ManyToOne
     @JoinColumn
     private Items items;
