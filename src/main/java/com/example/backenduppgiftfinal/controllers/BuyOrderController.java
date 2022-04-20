@@ -14,10 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class BuyOrderController {
+
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     CustomerRepository customerRepository;
+
+
 
     @RequestMapping()
     public Iterable<BuyOrder>allOrders(){

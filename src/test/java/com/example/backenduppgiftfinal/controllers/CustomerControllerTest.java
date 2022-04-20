@@ -57,7 +57,7 @@ class CustomerControllerTest {
 
         mvc.perform(MockMvcRequestBuilders.post("/customers").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customers)))
-                .andExpect(status().isOk()).andExpect(content().string(equalTo("niklas is saved")));
+                .andExpect(status().isOk()).andExpect(content().string(equalTo(customers.getName()+ " is saved")));
     }
 
     @Test
