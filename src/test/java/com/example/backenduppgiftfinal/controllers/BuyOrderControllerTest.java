@@ -101,6 +101,6 @@ class BuyOrderControllerTest {
                         .accept(MediaType.APPLICATION_JSON)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .json("[{\"id\":1,\"item\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
+                        .json("[{\"id\":1,\"item\":1,\"customer\":1,\"customers\":null,\"items\":null}]"));
     }
 }
