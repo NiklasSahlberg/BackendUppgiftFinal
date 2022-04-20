@@ -55,6 +55,6 @@ public class ItemController {
         }
         bo.setCustomerId(c.getId());
         orderRepository.save(bo);
-        return "order for kund med kundid: " + bo.getCustomer() + " och varan med id: : " + bo.getItem() +  " sparad"; //for för kan inte jämföra ö i test
+        return "order sparad";
     }
 }
