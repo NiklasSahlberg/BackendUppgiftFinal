@@ -41,23 +41,36 @@ class BuyOrderControllerTest {
     @BeforeEach
     public void init() {
         BuyOrder bo1 = new BuyOrder();
+        BuyOrder bo2 = new BuyOrder();
 
         Items items1 = new Items();
         items1.setId(1L);
         items1.setName("frys");
 
+        Items items2 = new Items();
+        items2.setId(2L);
+        items2.setName("gaffel");
 
         Customers customers1 = new Customers();
         customers1.setId(1L);
         customers1.setName("niklas");
 
+        Customers customers2 = new Customers();
+        customers2.setId(2L);
+        customers2.setName("panos");
+
         bo1.setCustomer(customers1.getId());
         bo1.setItem(items1.getId());
-
         bo1.setId(1L);
         bo1.setCustomerId(customers1.getId());
 
+        bo2.setCustomer(customers2.getId());
+        bo2.setItem(items2.getId());
+        bo2.setId(2L);
+        bo2.setCustomerId(customers2.getId());
+
         when(mockRepository.findById(1L)).thenReturn(Optional.of(bo1));
+        when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1, bo2));
     }
 
 
@@ -66,27 +79,32 @@ class BuyOrderControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/orders").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json
                 ("[{\"customer\":1,\"item\": 1}," +
-                        "{\"customer\":2,\"item\": 2}," +
-                        "{\"customer\":3,\"item\": 3}]"));
+                        "{\"customer\":2,\"item\": 2}]"));
   }
 
     @Test
     void orderById() throws Exception {
         BuyOrder bo1 = new BuyOrder();
+        BuyOrder bo2 = new BuyOrder();
 
         Items items1 = new Items();
         items1.setId(1L);
         items1.setName("frys");
 
 
+
         Customers customers1 = new Customers();
         customers1.setId(1L);
         customers1.setName("niklas");
+
 
         bo1.setCustomer(customers1.getId());
         bo1.setItem(items1.getId());
         bo1.setId(1L);
         bo1.setCustomerId(customers1.getId());
+
+
+
         when(mockRepository.findByCustomer(1L)).thenReturn(List.of(bo1));
         mvc.perform(MockMvcRequestBuilders.get("/orders/:customerId?id=1")
                         .accept(MediaType.APPLICATION_JSON)).andDo(MockMvcResultHandlers.print())

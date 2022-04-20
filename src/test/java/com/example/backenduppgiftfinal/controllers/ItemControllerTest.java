@@ -48,7 +48,6 @@ class ItemControllerTest {
     @BeforeEach
     public void init()
     {
-
         Items i1 = new Items();
         Items i2 = new Items();
         Items i3 = new Items();
@@ -72,15 +71,9 @@ class ItemControllerTest {
         c2.setId(2L);
         c3.setName("miklas");
         c3.setId(3L);
+
         when(mockRepository2.findById(1L)).thenReturn(Optional.of(c1));
         when(mockRepository2.findAll()).thenReturn(Arrays.asList(c1, c2, c3));
-
-
-
-      /*  Customers c = mockRepository2.findById(bo.getCustomer()).get();
-        Items i = mockRepository.findById(bo.getItem()).get();
-
-       */
 
         BuyOrder bo1 = new BuyOrder();
         BuyOrder bo2 = new BuyOrder();
@@ -91,12 +84,6 @@ class ItemControllerTest {
         bo1.setItems(i1);
         bo2.setItems(i2);
         bo3.setItems(i3);
-
-
-
-
-
-
 
     }
 
@@ -109,7 +96,6 @@ class ItemControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(asJsonString(items)))
                 .andExpect(status().isOk()).andExpect(content().string(equalTo("Varan " + items.getName() + " sparad")));
-
     }
 
     @Test
@@ -144,7 +130,6 @@ class ItemControllerTest {
         when(mockRepository.findById(1L)).thenReturn(Optional.of(i1));
         when(mockRepository.findAll()).thenReturn(Arrays.asList(i1, i2, i3));
 
-
         Customers c1 = new Customers();
         Customers c2 = new Customers();
         Customers c3 = new Customers();
@@ -154,15 +139,9 @@ class ItemControllerTest {
         c2.setId(5L);
         c3.setName("miklas");
         c3.setId(6L);
+
         when(mockRepository2.findById(4L)).thenReturn(Optional.of(c1));
         when(mockRepository2.findAll()).thenReturn(Arrays.asList(c1, c2, c3));
-
-
-
-      /*  Customers c = mockRepository2.findById(bo.getCustomer()).get();
-        Items i = mockRepository.findById(bo.getItem()).get();
-
-       */
 
         BuyOrder bo1 = new BuyOrder();
         bo1.setCustomer(c1.getId());
@@ -172,17 +151,8 @@ class ItemControllerTest {
         bo1.setItem(i1.getId());
 
         when(mockRepository3.findById(7L)).thenReturn(Optional.of(bo1));
-
-
-
         mvc.perform(MockMvcRequestBuilders.post("/items/buy").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(asJsonString(bo1)))
                 .andExpect(status().isOk());
-
-
-
-
-
-
     }
     public static String asJsonString(final Object obj) {
         try {

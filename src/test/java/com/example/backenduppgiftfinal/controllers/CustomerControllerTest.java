@@ -38,11 +38,15 @@ class CustomerControllerTest {
     public void init()
     {
         Customers c1 = new Customers();
+        Customers c2 = new Customers();
 
         c1.setName("Niklas");
         c1.setId(1L);
+        c2.setName("Panos");
+        c2.setId(2L);
 
         when(mockRepository.findById(1L)).thenReturn(Optional.of(c1));
+        when(mockRepository.findAll()).thenReturn(Arrays.asList(c1, c2));
     }
 
     @Test
@@ -61,8 +65,7 @@ class CustomerControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/customers").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content()
                         .json("[{\"id\":1,\"name\":\"Niklas\"}," +
-                                "{\"id\":2,\"name\":\"Panos\"},"+
-                                "{\"id\":3,\"name\":\"Apex\"}]"));
+                                "{\"id\":2,\"name\":\"Panos\"}]"));
     }
 
     @Test
