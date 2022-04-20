@@ -4,6 +4,7 @@ import com.example.backenduppgiftfinal.models.Customers;
 import com.example.backenduppgiftfinal.models.Items;
 import com.example.backenduppgiftfinal.repositories.CustomerRepository;
 import com.example.backenduppgiftfinal.repositories.ItemRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,22 @@ class CustomerControllerTest {
 
     @Test
     void addNewUser() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/customers/add?name=superman").accept(MediaType.APPLICATION_JSON))
+       /* mvc.perform(MockMvcRequestBuilders.post("/customers/add").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().string(equalTo("superman is saved")));
+
+        */
+        Customers customers = new Customers();
+        customers.setName("niklas");
+        customers.setId(1L);
+
+        mvc.perform(MockMvcRequestBuilders.post("/customers").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(customers)))
+                .andExpect(status().isOk()).andExpect(content().string(equalTo("niklas is saved")));
     }
 
     @Test
     void getAllCustomers() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/customers/all").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/customers").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content()
                         .json("[{\"id\":1,\"name\":\"Niklas\"}," +
                                 "{\"id\":2,\"name\":\"Panos\"},"+
@@ -73,4 +83,13 @@ class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":1,\"name\":\"Niklas\"}"));
     }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

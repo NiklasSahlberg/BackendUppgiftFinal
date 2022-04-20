@@ -4,6 +4,7 @@ import com.example.backenduppgiftfinal.models.BuyOrder;
 import com.example.backenduppgiftfinal.models.Customers;
 import com.example.backenduppgiftfinal.models.Items;
 import com.example.backenduppgiftfinal.repositories.OrderRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,6 +67,7 @@ class BuyOrderControllerTest {
         bo1.setId(1L);
         bo2.setId(2L);
         bo3.setId(3L);
+        bo1.setCustomerId(customers1.getId());
 
 
 
@@ -72,15 +76,12 @@ class BuyOrderControllerTest {
        // when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1, bo2, bo3));
         when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1,bo2,bo3));
     }
-    @Test
-    void addNewOrder() {
 
-    }
 
     @Test
     void allOrders() throws Exception {
 
-        mvc.perform(MockMvcRequestBuilders.get("/order/all").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/orders").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json
                 ("[{\"customer\":1,\"item\": 1}," +
                         "{\"customer\":2,\"item\": 2}," +
@@ -89,11 +90,48 @@ class BuyOrderControllerTest {
 
     @Test
     void orderById() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/order/findById?id=1")
-                        .accept(MediaType.APPLICATION_JSON))
+        BuyOrder bo1 = new BuyOrder();
+
+
+
+
+
+
+        Items items1 = new Items();
+        items1.setId(1L);
+        items1.setName("frys");
+
+
+        Customers customers1 = new Customers();
+        customers1.setId(1L);
+        customers1.setName("niklas");
+
+        bo1.setCustomer(customers1.getId());
+        bo1.setItem(items1.getId());
+        bo1.setId(1L);
+        bo1.setCustomerId(customers1.getId());
+        when(mockRepository.findByCustomer(1L)).thenReturn(List.of(bo1));
+        mvc.perform(MockMvcRequestBuilders.get("/orders/:customerId?id=1")
+                        .accept(MediaType.APPLICATION_JSON)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"id\":1}"));
+                .andExpect(MockMvcResultMatchers.content().json("[{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
 
 
+                      //," +
+                  /*    "{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1}," +
+                      "{\"customer\":3,\"item\": 3}]"));
+
+
+                   */
+
+
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

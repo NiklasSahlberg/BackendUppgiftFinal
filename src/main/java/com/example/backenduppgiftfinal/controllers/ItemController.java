@@ -10,6 +10,8 @@ import com.example.backenduppgiftfinal.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 
 @RestController
 @RequestMapping("/items")
@@ -21,27 +23,26 @@ public class ItemController {
     @Autowired
     OrderRepository orderRepository;
 
-    @RequestMapping("/add")
-    public String addItem(@RequestParam String name)
+    @PostMapping()
+    public String addItem(@RequestBody Items items)
     {
-        Items i = new Items();
-
-        i.setName(name);
 
 
-        itemRepository.save(i);
 
-        return "Varan " + name + " sparad";
+
+        itemRepository.save(items);
+
+        return "Varan " + items.getName() + " sparad";
     }
 
-    @RequestMapping("/all")
+    @RequestMapping()
     public Iterable<Items> allItems()
     {
         return itemRepository.findAll();
     }
 
     @RequestMapping ("/:id")
-    public Items itemById(@RequestParam long id) { return itemRepository.findById(id).get(); }
+    public Items itemById(@PathParam("id") long id) { return itemRepository.findById(id).get(); }
 
 
     @PostMapping("/buy") public String buyItems(@RequestBody BuyOrder bo)

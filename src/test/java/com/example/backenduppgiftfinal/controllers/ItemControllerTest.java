@@ -102,13 +102,19 @@ class ItemControllerTest {
 
     @Test
     void addItem() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/items/add?name=ost").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().string(equalTo("Varan ost sparad")));
+        Items items = new Items();
+        items.setId(1L);
+        items.setName("kyl");
+        mvc.perform(MockMvcRequestBuilders.post("/items").contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(items)))
+                .andExpect(status().isOk()).andExpect(content().string(equalTo("Varan " + items.getName() + " sparad")));
+
     }
 
     @Test
     void allItems() throws Exception{
-        mvc.perform(MockMvcRequestBuilders.get("/items/all").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/items").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content()
                         .json("[{\"id\":1,\"name\":\"kyl\"}," +
                                 "{\"id\":2,\"name\":\"potatis\"},"+
@@ -159,49 +165,16 @@ class ItemControllerTest {
        */
 
         BuyOrder bo1 = new BuyOrder();
-        BuyOrder bo2 = new BuyOrder();
-        BuyOrder bo3 = new BuyOrder();
         bo1.setCustomer(c1.getId());
-        bo2.setCustomer(c2.getId());
-        bo3.setCustomer(c3.getId());
         bo1.setCustomers(c1);
-        bo2.setCustomers(c2);
-        bo3.setCustomers(c3);
         bo1.setItems(i1);
-        bo2.setItems(i2);
-        bo3.setItems(i3);
         bo1.setId(7L);
-        bo2.setId(8L);
-        bo3.setId(9L);
+        bo1.setItem(i1.getId());
 
         when(mockRepository3.findById(7L)).thenReturn(Optional.of(bo1));
-        when(mockRepository3.findAll()).thenReturn(Arrays.asList(bo1, bo2, bo3));
-
-
-     /*   BuyOrder bo = new BuyOrder();
-        bo.setCustomer(1L);
-        bo.setItem(2L);
 
 
 
-
-        bo.setCustomer(bo.getCustomer());
-        Customers c = mockRepository2.findById(bo.getCustomer()).get();
-        Items i = mockRepository.findById(bo.getItem()).get();
-        mockRepository3.save(bo);
-        bo.setCustomers(c);
-        bo.setItems(i);
-        bo.setCustomerId(c.getId());
-
-
-
-
-      */
-
-
-
-      //  mvc.perform(MockMvcRequestBuilders.post("/items/buy").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(asJsonString(bo1)))
-          //      .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.post("/items/buy").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(asJsonString(bo1)))
                 .andExpect(status().isOk());
 

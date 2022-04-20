@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class BuyOrderController {
 
     @Autowired
@@ -33,12 +33,12 @@ public class BuyOrderController {
         return "Ordernummer med nr: " + orderNummer + " is saved";
     }
 
-    @RequestMapping("/all")
+    @RequestMapping()
     public Iterable<BuyOrder>allOrders(){
         return orderRepository.findAll();
     }
 
-    @RequestMapping("/findById/:customerId")
+    @RequestMapping("/:customerId")
     public List<BuyOrder> orderById(long id)
     {
         return orderRepository.findByCustomer(id);
