@@ -176,7 +176,7 @@ class ItemControllerTest {
 
 
         mvc.perform(MockMvcRequestBuilders.post("/items/buy").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(asJsonString(bo1)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andExpect(content().string(equalTo("order for kund med kundid: " + bo1.getCustomer() + " och varan med id: : " + bo1.getItem() +  " sparad")));
 
 
 
