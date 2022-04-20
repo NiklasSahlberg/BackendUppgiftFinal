@@ -24,14 +24,8 @@ public class ItemController {
     OrderRepository orderRepository;
 
     @PostMapping()
-    public String addItem(@RequestBody Items items)
-    {
-
-
-
-
+    public String addItem(@RequestBody Items items) {
         itemRepository.save(items);
-
         return "Varan " + items.getName() + " sparad";
     }
 
@@ -43,7 +37,6 @@ public class ItemController {
 
     @RequestMapping ("/:id")
     public Items itemById(@PathParam("id") long id) { return itemRepository.findById(id).get(); }
-
 
     @PostMapping("/buy") public String buyItems(@RequestBody BuyOrder bo)
     {
@@ -57,18 +50,11 @@ public class ItemController {
         if (i != null) {
             bo.setItems(i);
         }
-
-
         if (i != null) {
             bo.setItems(i);
         }
-
         bo.setCustomerId(c.getId());
         orderRepository.save(bo);
         return "order sparad";
     }
-
-
-
-
 }

@@ -39,13 +39,6 @@ public class BuyOrderController {
     }
 
     @RequestMapping("/:customerId")
-    public List<BuyOrder> orderById(long id)
-    {
-        return orderRepository.findByCustomer(id);
-    }
-
-
-
-
+    public List<BuyOrder> orderById(long id) {return orderRepository.findByCustomer(id);}
 
 }

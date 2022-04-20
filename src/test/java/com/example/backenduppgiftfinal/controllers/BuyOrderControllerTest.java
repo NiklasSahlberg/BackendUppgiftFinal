@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
@@ -39,14 +40,7 @@ class BuyOrderControllerTest {
 
     @BeforeEach
     public void init() {
-
         BuyOrder bo1 = new BuyOrder();
-        BuyOrder bo2 = new BuyOrder();
-        BuyOrder bo3 = new BuyOrder();
-
-
-
-
 
         Items items1 = new Items();
         items1.setId(1L);
@@ -60,27 +54,15 @@ class BuyOrderControllerTest {
         bo1.setCustomer(customers1.getId());
         bo1.setItem(items1.getId());
 
-        bo2.setCustomer(2L);
-        bo2.setItem(2L);
-        bo3.setCustomer(3L);
-        bo3.setItem(3L);
         bo1.setId(1L);
-        bo2.setId(2L);
-        bo3.setId(3L);
         bo1.setCustomerId(customers1.getId());
 
-
-
-
         when(mockRepository.findById(1L)).thenReturn(Optional.of(bo1));
-       // when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1, bo2, bo3));
-        when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1,bo2,bo3));
     }
 
 
     @Test
     void allOrders() throws Exception {
-
         mvc.perform(MockMvcRequestBuilders.get("/orders").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json
                 ("[{\"customer\":1,\"item\": 1}," +
@@ -91,11 +73,6 @@ class BuyOrderControllerTest {
     @Test
     void orderById() throws Exception {
         BuyOrder bo1 = new BuyOrder();
-
-
-
-
-
 
         Items items1 = new Items();
         items1.setId(1L);
@@ -114,16 +91,8 @@ class BuyOrderControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/orders/:customerId?id=1")
                         .accept(MediaType.APPLICATION_JSON)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("[{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
-
-
-                      //," +
-                  /*    "{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1}," +
-                      "{\"customer\":3,\"item\": 3}]"));
-
-
-                   */
-
+                .andExpect(MockMvcResultMatchers.content()
+                        .json("[{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
 
     }
 

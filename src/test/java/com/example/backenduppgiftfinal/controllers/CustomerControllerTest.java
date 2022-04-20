@@ -38,26 +38,15 @@ class CustomerControllerTest {
     public void init()
     {
         Customers c1 = new Customers();
-        Customers c2 = new Customers();
-        Customers c3 = new Customers();
 
         c1.setName("Niklas");
         c1.setId(1L);
-        c2.setName("Panos");
-        c2.setId(2L);
-        c3.setName("Apex");
-        c3.setId(3L);
 
         when(mockRepository.findById(1L)).thenReturn(Optional.of(c1));
-        when(mockRepository.findAll()).thenReturn(Arrays.asList(c1, c2, c3));
     }
 
     @Test
     void addNewUser() throws Exception {
-       /* mvc.perform(MockMvcRequestBuilders.post("/customers/add").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().string(equalTo("superman is saved")));
-
-        */
         Customers customers = new Customers();
         customers.setName("niklas");
         customers.setId(1L);

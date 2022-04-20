@@ -10,19 +10,15 @@ import javax.websocket.server.PathParam;
 @RestController
 @RequestMapping(path ="/customers")
 public class CustomerController {
+
     @Autowired
     private CustomerRepository customerRepository;
 
     @PostMapping()
     public String addNewUser(@RequestBody Customers customers){
-
-
         customerRepository.save(customers);
-
         return customers.getName() + " is saved";
     }
-
-
 
     @RequestMapping()
     public Iterable<Customers> getAllCustomers(){
