@@ -62,12 +62,10 @@ class BuyOrderControllerTest {
         bo1.setCustomer(customers1.getId());
         bo1.setItem(items1.getId());
         bo1.setId(1L);
-        bo1.setCustomerId(customers1.getId());
 
         bo2.setCustomer(customers2.getId());
         bo2.setItem(items2.getId());
         bo2.setId(2L);
-        bo2.setCustomerId(customers2.getId());
 
         when(mockRepository.findById(1L)).thenReturn(Optional.of(bo1));
         when(mockRepository.findAll()).thenReturn(Arrays.asList(bo1, bo2));
@@ -85,40 +83,24 @@ class BuyOrderControllerTest {
     @Test
     void orderById() throws Exception {
         BuyOrder bo1 = new BuyOrder();
-        BuyOrder bo2 = new BuyOrder();
 
         Items items1 = new Items();
         items1.setId(1L);
         items1.setName("frys");
 
-
-
         Customers customers1 = new Customers();
         customers1.setId(1L);
         customers1.setName("niklas");
 
-
         bo1.setCustomer(customers1.getId());
         bo1.setItem(items1.getId());
         bo1.setId(1L);
-        bo1.setCustomerId(customers1.getId());
-
-
 
         when(mockRepository.findByCustomer(1L)).thenReturn(List.of(bo1));
         mvc.perform(MockMvcRequestBuilders.get("/orders/:customerId?id=1")
                         .accept(MediaType.APPLICATION_JSON)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .json("[{\"id\":1,\"item\":1,\"customerId\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
-
-    }
-
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+                        .json("[{\"id\":1,\"item\":1,\"customer\":1,\"customers\":null,\"itemsList\":null,\"items\":null}]"));
     }
 }

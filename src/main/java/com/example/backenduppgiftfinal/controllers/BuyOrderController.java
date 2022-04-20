@@ -14,24 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class BuyOrderController {
-
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     CustomerRepository customerRepository;
-
-    @RequestMapping("/add")
-    public String addNewOrder(@RequestParam String orderNummer, @RequestParam Long kund) {
-        BuyOrder bo = new BuyOrder();
-        Customers c = customerRepository.findById(kund).get();
-
-
-        if (c != null) {
-            bo.setCustomers(c);
-        }
-        orderRepository.save(bo);
-        return "Ordernummer med nr: " + orderNummer + " is saved";
-    }
 
     @RequestMapping()
     public Iterable<BuyOrder>allOrders(){

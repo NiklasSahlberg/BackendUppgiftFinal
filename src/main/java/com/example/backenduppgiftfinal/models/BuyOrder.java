@@ -13,13 +13,11 @@ public class BuyOrder {
     @GeneratedValue
     private Long id;
     private Long item;
-    private Long customerId;
     private Long customer;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn
     Customers customers;
-
 
     @ManyToMany
     @JoinTable
